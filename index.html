@@ -1,312 +1,224 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mod-12 Prime & Riemann Analyzer | Samet Şahin</title>
+<title>Mod-12 Prime & Riemann Analyzer | Samet Sahin</title>
 <style>
-:root{--bg:#0f172a;--card:#1e293b;--text:#f8fafc;--muted:#94a3b8;--acc:#38bdf8;--gold:#fbbf24;--grn:#34d399;--pur:#a78bfa;--red:#f87171;--bdr:#334155}
-body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:12px;line-height:1.4}
-.wrap{max-width:1100px;margin:0 auto}
-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bdr);padding-bottom:12px;margin-bottom:15px;flex-wrap:wrap;gap:8px}
-h1{margin:0;font-size:1.25rem;color:var(--acc)}
-.sub{color:var(--muted);font-size:0.8rem}
-.btn{padding:8px 14px;border-radius:6px;border:none;font-weight:bold;cursor:pointer;font-size:0.88rem}
-.btn-pro{background:var(--card);color:var(--gold);border:1px solid var(--gold)}
-.btn-pro.ok{background:rgba(52,211,153,0.2);color:var(--grn);border-color:var(--grn)}
-.btn-run{background:var(--acc);color:#000}
-.btn-csv{background:var(--gold);color:#000}
-.panel{background:var(--card);padding:12px;border-radius:8px;border:1px solid var(--bdr);display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
-input[type=text]{background:var(--bg);border:1px solid var(--bdr);color:var(--text);padding:9px;border-radius:6px;font-size:1rem;width:200px;font-family:monospace}
-.banner{background:rgba(56,189,248,0.12);border:1px solid var(--acc);color:var(--acc);padding:8px 12px;border-radius:6px;font-size:0.82rem;margin-bottom:15px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:15px}
-.card{background:var(--card);padding:12px;border-radius:8px;border:1px solid var(--bdr);word-break:break-word}
-.card h3{margin:0 0 4px;font-size:0.8rem;color:var(--muted)}
-.val{font-size:1.25rem;font-weight:bold;font-family:monospace}
-.csub{font-size:0.75rem;color:var(--acc);margin-top:3px}
-.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-bottom:18px}
-.cbox{background:var(--card);padding:12px;border-radius:8px;border:1px solid var(--bdr);text-align:center}
-.cbox h3{margin:0 0 8px;font-size:0.95rem;color:var(--gold);text-align:left}
-canvas{background:var(--bg);border-radius:6px;border:1px solid var(--bdr);max-width:100%;height:auto}
-.leg{display:flex;justify-content:center;gap:10px;font-size:0.75rem;margin-top:6px;flex-wrap:wrap}
-.tbar{display:flex;justify-content:space-between;align-items:center;margin:15px 0 8px;flex-wrap:wrap;gap:8px}
-select{background:var(--card);color:var(--text);border:1px solid var(--bdr);padding:7px;border-radius:6px}
-.twrap{max-height:380px;overflow:auto;border:1px solid var(--bdr);border-radius:8px;background:var(--card)}
-table{width:100%;border-collapse:collapse;font-family:monospace;font-size:0.82rem;text-align:left}
-th{background:#0b1120;color:var(--acc);position:sticky;top:0;padding:8px 10px;border:1px solid var(--bdr)}
-td{padding:6px 10px;border:1px solid var(--bdr);white-space:nowrap}
-tr:nth-child(even){background:rgba(15,23,42,0.4)}
-.bdg{padding:2px 5px;border-radius:4px;font-size:0.72rem;font-weight:bold;border:1px solid}
-.bm{color:var(--gold);border-color:var(--gold)}
-.bf{color:var(--grn);border-color:var(--grn)}
-.be{color:var(--acc);border-color:var(--acc)}
-.bs{color:var(--pur);border-color:var(--pur)}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99;justify-content:center;align-items:center;padding:15px}
-.mbox{background:var(--card);border:2px solid var(--gold);border-radius:10px;padding:20px;max-width:400px;width:100%;text-align:center}
-.mbox input{width:90%;padding:9px;margin:10px 0;background:var(--bg);border:1px solid var(--bdr);color:#fff;border-radius:6px;text-align:center}
-footer{margin-top:25px;padding-top:12px;border-top:1px solid var(--bdr);font-size:0.78rem;color:var(--muted)}
-footer a{color:var(--acc);text-decoration:none}
+body{font-family:sans-serif;background:#0f172a;color:#f8fafc;margin:0;padding:15px}
+.box{max-width:1000px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #334155;padding-bottom:10px;margin-bottom:15px}
+h1{font-size:1.2rem;color:#38bdf8;margin:0}
+.bar{background:#1e293b;padding:12px;border-radius:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:15px}
+input{background:#0f172a;border:1px solid #475569;color:#fff;padding:8px;border-radius:5px;font-size:1rem;width:160px}
+button{padding:8px 14px;border:none;border-radius:5px;font-weight:bold;cursor:pointer}
+.b1{background:#38bdf8;color:#000}
+.b2{background:#fbbf24;color:#000}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:15px}
+.card{background:#1e293b;padding:12px;border-radius:8px;border:1px solid #334155}
+.card small{color:#94a3b8;display:block;margin-bottom:4px}
+.card b{font-size:1.2rem;font-family:monospace}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-bottom:15px}
+.cbox{background:#1e293b;padding:10px;border-radius:8px;text-align:center}
+canvas{background:#0f172a;border-radius:6px;max-width:100%}
+.tbl{max-height:300px;overflow:auto;background:#1e293b;border-radius:8px}
+table{width:100%;border-collapse:collapse;font-family:monospace;font-size:0.85rem}
+th,td{padding:6px 10px;border-bottom:1px solid #334155;text-align:left}
+th{background:#0b1120;color:#38bdf8;position:sticky;top:0}
+.tag{background:#fbbf24;color:#000;padding:1px 5px;border-radius:3px;font-size:0.75rem;font-weight:bold}
+.mod{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;padding:15px}
+.mbox{background:#1e293b;border:2px solid #fbbf24;padding:20px;border-radius:10px;max-width:360px;text-align:center}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-  <div>
-    <h1>Mod-12 Saat Yörüngesi & Bölmesiz Karekök Analizörü</h1>
-    <div class="sub">3-Bölgeli Üst Kök (3b, 3b-1, 3b-2), Riemann Li(x) & Mersenne Motoru</div>
+<div class="box">
+  <div class="top">
+    <h1>Mod-12 Prime & Riemann Analyzer</h1>
+    <button class="b2" id="pbtn" onclick="openModal()">PRO Unlock</button>
   </div>
-  <button class="btn btn-pro" id="proBtn" onclick="openM()">👑 PRO Sürümü Aç</button>
-</header>
-<div class="panel">
-  <b>Üst Sınır (N):</b>
-  <input type="text" id="lim" value="5000">
-  <button class="btn btn-run" onclick="runClick()">Analiz Et</button>
-  <button class="btn btn-csv" id="csvBtn" onclick="csvClick()">🔒 Excel İndir [PRO]</button>
-  <span id="tm" style="color:var(--grn);font-size:0.82rem"></span>
-</div>
 
-<div class="banner" id="ban">⚡ <b>Ücretsiz Sürüm (N ≤ 10.000.000):</b> 10 Milyona kadar tam tarama ücretsizdir. 10 Milyon üzeri (Sınırsız BigInt) ve Excel çıktısı PRO lisansı gerektirir.</div>
-
-<div class="grid">
-  <div class="card"><h3>Asal Sayısı π(N)</h3><div class="val" id="r-tot">-</div><div class="csub" id="r-li">-</div></div>
-  <div class="card"><h3>Bölmesiz Üst Kök b = ⌈√N⌉</h3><div class="val" id="r-rt">-</div><div class="csub" id="r-zn">-</div></div>
-  <div class="card"><h3>Mersenne Asalları (2ᵖ - 1)</h3><div class="val" style="color:var(--gold)" id="r-mc">-</div><div class="csub" id="r-ml">-</div></div>
-  <div class="card"><h3>Saat Yörüngeleri (1 | 5 | 7 | 11)</h3><div class="val" style="font-size:1rem" id="r-cc">-</div><div class="csub" id="r-fx">Sabit: 2, 3 (2 adet)</div></div>
-</div>
-
-<div class="charts">
-  <div class="cbox">
-    <h3>🕒 Mod-12 Dairesel Saat Yörüngesi</h3>
-    <canvas id="cClock" width="320" height="280"></canvas>
-    <div class="leg">
-      <span style="color:#34d399">● Saat 1</span><span style="color:#fbbf24">● Saat 5</span>
-      <span style="color:#38bdf8">● Saat 7</span><span style="color:#a78bfa">● Saat 11</span><span style="color:#f87171">● Sabit(2,3)</span>
-    </div>
+  <div class="bar">
+    <input type="text" id="num" value="5000">
+    <button class="b1" onclick="startCalc()">Analyze</button>
+    <button class="b2" id="cbtn" onclick="getCSV()">Excel CSV [PRO]</button>
+    <span id="msg" style="color:#34d399;font-size:0.85rem"></span>
   </div>
-  <div class="cbox">
-    <h3>📈 Riemann Hipotezi: π(x) vs Li(x) vs x/ln(x)</h3>
-    <canvas id="cRiem" width="460" height="280"></canvas>
-    <div class="leg">
-      <span style="color:#38bdf8">━ π(x)</span><span style="color:#fbbf24">┅ Li(x)</span><span style="color:#f87171">┅ x/ln(x)</span>
-    </div>
+
+  <div class="grid">
+    <div class="card"><small>Total Primes pi(N)</small><b id="v1">-</b></div>
+    <div class="card"><small>3-Zone Root b = ceil(sqrt(N))</small><b id="v2">-</b></div>
+    <div class="card"><small>Mersenne Primes (2^p - 1)</small><b id="v3" style="color:#fbbf24">-</b></div>
+    <div class="card"><small>Clock Orbits (1 | 5 | 7 | 11)</small><b id="v4" style="font-size:1rem">-</b></div>
+  </div>
+
+  <div class="row">
+    <div class="cbox"><small style="color:#fbbf24">Mod-12 Clock Orbit</small><br><canvas id="cv1" width="300" height="250"></canvas></div>
+    <div class="cbox"><small style="color:#38bdf8">Riemann pi(x) vs Li(x)</small><br><canvas id="cv2" width="420" height="250"></canvas></div>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>#</th><th>Prime (p)</th><th>Mod-12 Orbit</th><th>Special Formula</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
   </div>
 </div>
 
-<div class="tbar">
-  <b style="color:var(--gold)">📊 İnteraktif Excel Tablosu (İlk 1.000 Kayıt)</b>
-  <select id="flt" onchange="drawTbl()">
-    <option value="ALL">Tümü</option>
-    <option value="MERSENNE">Mersenne Asalları</option>
-    <option value="SPECIAL">Tüm Ünlü Formüllüler</option>
-    <option value="C1">Saat 1 (12k+1)</option>
-    <option value="C5">Saat 5 (12k+5)</option>
-    <option value="C7">Saat 7 (12k+7)</option>
-    <option value="C11">Saat 11 (12k+11)</option>
-    <option value="FIXED">Sabit (2, 3)</option>
-  </select>
-</div>
-
-<div class="twrap">
-  <table>
-    <thead><tr><th>#</th><th>Asal (p)</th><th>Saat Yörüngesi</th><th>Mersenne</th><th>Fermat</th><th>Euler</th><th>Sophie (2p+1)</th></tr></thead>
-    <tbody id="tb"></tbody>
-  </table>
-</div>
-
-<footer>
-  <b>Zenodo Preprints (Samet Şahin, 2026):</b> <a href="https://zenodo.org" target="_blank">Mod-12^6 Hardware Golden Ratio</a> • <a href="https://zenodo.org" target="_blank">Three-Zone Bounding Root Map (3b, 3b-1, 3b-2)</a> • <a href="https://zenodo.org" target="_blank">Mersenne 1/k Threshold Rule</a>
-</footer>
-</div>
-
-<div class="modal" id="mod">
+<div class="mod" id="md">
   <div class="mbox">
-    <h2 style="color:var(--gold);margin-top:0">👑 PRO Sürüm Kilidini Aç</h2>
-    <p style="font-size:0.85rem;color:var(--muted)">10.000.000 üzeri Sınırsız BigInt analizi ve Excel (CSV) indirme için lisans anahtarınızı girin.</p>
-    <input type="text" id="lKey" placeholder="Gumroad Lisans Anahtarı">
-    <div id="lMsg" style="font-size:0.8rem;color:var(--red);min-height:18px"></div>
-    <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
-      <a href="https://gumroad.com" target="_blank" class="btn btn-csv" style="text-decoration:none">🛒 Satın Al ($9)</a>
-      <button class="btn" style="background:var(--grn);color:#000" onclick="verKey()">🔑 Doğrula</button>
-    </div>
-    <button class="btn" style="background:transparent;color:var(--muted);border:1px solid var(--bdr);margin-top:10px" onclick="closeM()">Kapat</button>
+    <h3 style="color:#fbbf24;margin-top:0">Unlock PRO (Unlimited & Excel)</h3>
+    <p style="font-size:0.85rem;color:#94a3b8">Free limit is 10,000,000. Enter Gumroad License Key for unlimited BigInt & CSV.</p>
+    <input type="text" id="key" placeholder="License Key" style="width:85%;margin-bottom:10px;text-align:center"><br>
+    <a href="https://gumroad.com" target="_blank" style="background:#fbbf24;color:#000;padding:8px 14px;border-radius:5px;text-decoration:none;font-weight:bold;font-size:0.85rem">Buy ($9)</a>
+    <button class="b1" onclick="checkKey()">Activate</button>
+    <button style="background:#334155;color:#fff;margin-left:5px" onclick="closeModal()">Close</button>
+    <div id="kerr" style="color:#f87171;font-size:0.8rem;margin-top:8px"></div>
   </div>
 </div>
+
 <script>
-window.onerror = function(msg) {
-  document.getElementById('ban').innerHTML = "<span style='color:#f87171'>Hata: " + msg + "</span>";
-};
+var PRO = localStorage.getItem("pro_ok") === "1";
+var DATA = [];
+var MEXP =;
 
-const PID = "fzbwzm", MKEY = "SAMET-PRO-2026", FLIM = BigInt("10000000");
-let isPro = localStorage.getItem('p_pro') === '1', recs = new Array();
-const MEXP = "2,3,5,7,13,17,19,31,61,89,107,127,521,607,1279,2203,2281,3217,4253,4423,9689,9941,11213,19937,21701,23209,44497,86243,110503,132049,216091,756839,859433,1257787,1398269,2976221,3021377,6972593,13466917,20996011,24036583,25964951,30402457,32582657,37156667,42643801,43112609,57885161,74207281,77232917,82589933,136279841".split(",").map(Number);
-const FPRM = "3,5,17,257,65537".split(",").map(function(x){ return BigInt(x); });
+function openModal(){ document.getElementById("md").style.display = "flex"; }
+function closeModal(){ document.getElementById("md").style.display = "none"; }
 
-function upUI(){
-  const pb = document.getElementById('proBtn'), cb = document.getElementById('csvBtn');
-  if(isPro){ pb.innerText="✅ PRO Aktif"; pb.classList.add('ok'); cb.innerText="📥 Excel (CSV) İndir"; cb.style.background="var(--grn)"; }
-}
-function openM(){ document.getElementById('mod').style.display='flex'; }
-function closeM(){ document.getElementById('mod').style.display='none'; }
-
-async function verKey(){
-  const k = document.getElementById('lKey').value.trim(), m = document.getElementById('lMsg');
-  if(!k){ m.innerText="Anahtar girin."; return; }
-  if(k === MKEY){ isPro=true; localStorage.setItem('p_pro','1'); upUI(); closeM(); calc(); return; }
-  m.style.color="var(--acc)"; m.innerText="Doğrulanıyor...";
-  try{
-    const r = await fetch("https://gumroad.com",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"product_permalink="+PID+"&license_key="+encodeURIComponent(k)});
-    const d = await r.json();
-    if(d.success && !d.purchase.refunded){ isPro=true; localStorage.setItem('p_pro','1'); upUI(); closeM(); calc(); }
-    else{ m.style.color="var(--red)"; m.innerText="Geçersiz anahtar."; }
-  }catch(e){ m.style.color="var(--red)"; m.innerText="Bağlantı hatası."; }
-}
-
-function runClick(){
-  const raw = document.getElementById('lim').value.replace(/[^0-9]/g,'');
-  if(!raw) return;
-  if(BigInt(raw) > FLIM && !isPro){ openM(); return; }
-  calc();
-}
-function csvClick(){
-  if(!isPro){ openM(); return; }
-  let c = "\uFEFFSira;Asal;Saat_Yorungesi;Mersenne;Fermat;Euler;Sophie\n";
-  recs.forEach(function(r){ c += r.i+";"+r.p+";"+r.o+";"+r.m+";"+r.f+";"+r.e+";"+r.s+"\n"; });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob(Array.of(c),{type:'text/csv;charset=utf-8;'}));
-  a.download = "Asal_Analiz_"+document.getElementById('lim').value+".csv"; a.click();
-}
-
-function root3Z(N){
-  const o=BigInt(1),tw=BigInt(2),th=BigInt(3),eg=BigInt(8),nn=BigInt(9);
-  if(N<=o) return {b:o,zn:"Base",st:0};
-  let sc=new Array(), t=N;
-  while(t>nn){ sc.push(t); t=(t+eg)/nn; }
-  let b=o; while(b*b<t) b+=o;
-  let zn="Base", st=sc.length;
-  while(sc.length>0){
-    let tn=sc.pop(), bc=th*b, fc=bc*bc-tn;
-    if(fc>=tw*bc-o){ bc-=o; fc=bc*bc-tn; if(fc>=tw*bc-o){ bc-=o; zn="Zone 3 (3b-2)"; } else zn="Zone 2 (3b-1)"; }
-    else zn="Zone 1 (3b)";
-    b=bc;
+function checkKey(){
+  var k = document.getElementById("key").value.trim();
+  var err = document.getElementById("kerr");
+  if(k === "SAMET-PRO-2026"){
+    PRO = true; localStorage.setItem("pro_ok", "1");
+    document.getElementById("pbtn").innerText = "PRO Active";
+    closeModal(); startCalc(); return;
   }
-  return {b:b,zn:zn,st:st};
+  err.innerText = "Verifying...";
+  fetch("https://gumroad.com", {
+    method: "POST",
+    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+    body: "product_permalink=fzbwzm&license_key=" + encodeURIComponent(k)
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if(d.success){
+      PRO = true; localStorage.setItem("pro_ok", "1");
+      document.getElementById("pbtn").innerText = "PRO Active";
+      closeModal(); startCalc();
+    } else { err.innerText = "Invalid Key"; }
+  }).catch(function(){ err.innerText = "Network Error"; });
 }
 
-function li(x){
-  if(x<2) return 0;
-  let h=(x-2)/150, s=(1/Math.log(2))+(1/Math.log(x));
-  for(let i=1;i<150;i++) s+=(i%2===0?2:4)/Math.log(2+i*h);
-  return (h/3)*s;
+function getCSV(){
+  if(!PRO){ openModal(); return; }
+  var txt = "Index,Prime,Orbit,Special\n";
+  for(var i=0; i<DATA.length; i++){
+    txt += DATA[i].i + "," + DATA[i].p + "," + DATA[i].o + "," + DATA[i].s + "\n";
+  }
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([txt], {type: "text/csv"}));
+  a.download = "primes.csv"; a.click();
 }
 
-function isP(n){
-  if(n<=1)return false; if(n<=3)return true; if(n%2===0||n%3===0)return false;
-  for(let i=5;i*i<=n;i+=6) if(n%i===0||n%(i+2)===0)return false;
-  return true;
+function getRoot(n){
+  var b = 1;
+  while(b * b < n) b++;
+  return b;
 }
 
-function calc(){
-  const t0 = performance.now();
-  const raw = document.getElementById('lim').value.replace(/[^0-9]/g,'');
+function getLi(x){
+  if(x < 2) return 0;
+  var h = (x - 2) / 100, s = (1 / Math.log(2)) + (1 / Math.log(x));
+  for(var i = 1; i < 100; i++) s += (i % 2 === 0 ? 2 : 4) / Math.log(2 + i * h);
+  return (h / 3) * s;
+}
+
+function startCalc(){
+  var t0 = performance.now();
+  var raw = document.getElementById("num").value.replace(/[^0-9]/g, "");
   if(!raw) return;
-  document.getElementById('lim').value = raw;
-  const bN = BigInt(raw);
-  if(bN < BigInt(2)) return;
-  if(bN > FLIM && !isPro){ document.getElementById('lim').value="10000000"; return calc(); }
+  var n = Number(raw);
+  if(n > 10000000 && !PRO){ openModal(); return; }
 
-  const rd = root3Z(bN), bs = rd.b.toString();
-  document.getElementById('r-rt').innerText = bs.length>20 ? bs.slice(0,16)+"...("+bs.length+" bas.)" : rd.b.toLocaleString();
-  document.getElementById('r-zn').innerText = rd.zn+" | "+rd.st+" Adım";
+  if(PRO){ document.getElementById("pbtn").innerText = "PRO Active"; }
 
-  if(bN <= FLIM){
-    const N = Number(bN), lr = Number(rd.b), sv = new Uint8Array(N+1);
-    sv.fill(1); sv.set(Uint8Array.of(0,0),0);
-    for(let i=2;i<=lr;i++) if(sv[i]===1) for(let j=i*i;j<=N;j+=i) sv[j]=0;
-
-    const mm=new Map(), fm=new Map(), em=new Map();
-    MEXP.forEach(function(p){ let m=(BigInt(1)<<BigInt(p))-BigInt(1); if(m<=bN) mm.set(Number(m),"2^"+p+"-1"); });
-    FPRM.forEach(function(f,idx){ if(f<=bN) fm.set(Number(f),"2^(2^"+idx+")+1"); });
-    for(let n=0;(n*n+n+41)<=N;n++){ let e=n*n+n+41; if(sv[e]===1) em.set(e,"n="+n); }
-
-    recs=new Array(); let c1=0,c5=0,c7=0,c11=0,fx=0, pts=new Array(), stp=Math.max(1,Math.floor(N/50));
-    for(let i=2;i<=N;i++){
-      if(sv[i]===1){
-        let o="",oc="";
-        if(i===2||i===3){fx++;o="Sabit Çekirdek";oc="FIXED";}
-        else{ let m=i%12; if(m===1){c1++;o="Saat 1 (12k+1)";oc="C1";} else if(m===5){c5++;o="Saat 5 (12k+5)";oc="C5";} else if(m===7){c7++;o="Saat 7 (12k+7)";oc="C7";} else if(m===11){c11++;o="Saat 11 (12k+11)";oc="C11";} }
-        let sg=2*i+1, ok=(sg<=N)?(sv[sg]===1):isP(sg);
-        recs.push({i:recs.length+1,p:i,o:o,oc:oc,m:mm.get(i)||"",f:fm.get(i)||"",e:em.get(i)||"",s:ok?String(sg):""});
+  if(n <= 10000000){
+    var b = getRoot(n);
+    var sv = new Uint8Array(n + 1);
+    for(var i = 2; i <= n; i++) sv[i] = 1;
+    for(var i = 2; i <= b; i++){
+      if(sv[i] === 1){
+        for(var j = i * i; j <= n; j += i) sv[j] = 0;
       }
-      if(i%stp===0||i===N) pts.push({x:i,pi:recs.length,li:li(i),g:i/Math.log(i)});
     }
-    const tot=recs.length, lN=li(N);
-    document.getElementById('r-tot').innerText = tot.toLocaleString();
-    document.getElementById('r-li').innerText = "Li(N) ≈ "+Math.round(lN).toLocaleString()+" | Fark: "+Math.abs(lN-tot).toFixed(1);
-    const mk=Array.from(mm.keys());
-    document.getElementById('r-mc').innerText = mk.length;
-    document.getElementById('r-ml').innerText = mk.join(', ')||'-';
-    document.getElementById('r-cc').innerText = c1+" | "+c5+" | "+c7+" | "+c11;
-    document.getElementById('r-fx').innerText = "Sabit: 2, 3 ("+fx+" adet)";
-    drawClk(c1,c5,c7,c11,fx); drawRiem(pts,false); drawTbl();
+
+    var mList = [];
+    for(var k = 0; k < MEXP.length; k++){
+      var m = Math.pow(2, MEXP[k]) - 1;
+      if(m <= n && sv[m] === 1) mList.push(m);
+    }
+
+    DATA = [];
+    var c1 = 0, c5 = 0, c7 = 0, c11 = 0, pts = [];
+    var step = Math.max(1, Math.floor(n / 40));
+
+    for(var i = 2; i <= n; i++){
+      if(sv[i] === 1){
+        var orb = "Fixed (2,3)";
+        if(i > 3){
+          var md = i % 12;
+          if(md === 1){ c1++; orb = "1 O'Clock"; }
+          else if(md === 5){ c5++; orb = "5 O'Clock"; }
+          else if(md === 7){ c7++; orb = "7 O'Clock"; }
+          else if(md === 11){ c11++; orb = "11 O'Clock"; }
+        }
+        var sp = "";
+        if(mList.indexOf(i) !== -1) sp = "Mersenne";
+        else if(i === 3 || i === 5 || i === 17 || i === 257 || i === 65537) sp = "Fermat";
+        DATA.push({i: DATA.length + 1, p: i, o: orb, s: sp});
+      }
+      if(i % step === 0 || i === n){
+        pts.push({x: i, pi: DATA.length, li: getLi(i)});
+      }
+    }
+
+    document.getElementById("v1").innerText = DATA.length.toLocaleString();
+    document.getElementById("v2").innerText = b.toLocaleString();
+    document.getElementById("v3").innerText = mList.length + " (" + (mList.join(",") || "-") + ")";
+    document.getElementById("v4").innerText = c1 + " | " + c5 + " | " + c7 + " | " + c11;
+
+    drawClock(c1, c5, c7, c11);
+    drawRiemann(pts);
+    drawTable();
   } else {
-    document.getElementById('ban').innerHTML = "👑 <b>PRO Sınırsız Mod ("+raw.length+" Basamak):</b> Riemann analitik motoru aktif.";
-    const lnN = Math.log(Number(raw.slice(0,15))) + (raw.length - Math.min(raw.length,15))*Math.LN10;
-    const fac = 1 + 1/lnN + 2/(lnN*lnN);
-    const fmt = function(m){ if(raw.length<=15) return Math.round((Number(bN)/lnN)*m).toLocaleString(); let v=(Number(raw.slice(0,10))/1e9/lnN)*m, e=raw.length-1; while(v<1){v*=10;e--;} return v.toFixed(4)+"×10^"+e; };
-    document.getElementById('r-tot').innerText = "≈ "+fmt(fac);
-    document.getElementById('r-li').innerText = "Gauss x/ln(x) ≈ "+fmt(1);
-    let fm=new Array(); recs=new Array();
-    MEXP.forEach(function(p){ let m=(BigInt(1)<<BigInt(p))-BigInt(1); if(m<=bN){ let ms=m.toString(); fm.push(ms.length>15?"2^"+p+"-1":ms); recs.push({i:recs.length+1,p:ms.length>22?"2^"+p+"-1":ms,o:p===2?"Sabit":"Saat 7",oc:p===2?"FIXED":"C7",m:"2^"+p+"-1",f:"",e:"",s:""}); }});
-    document.getElementById('r-mc').innerText = fm.length;
-    document.getElementById('r-ml').innerText = fm.slice(-5).join(', ');
-    document.getElementById('r-cc').innerText = "%25 | %25 | %25 | %25";
-    drawClk("~25%","~25%","~25%","~25%",2);
-    let pts=new Array();
-    for(let k=1;k<=40;k++){ let rt=k/40, lx=Math.max(1.5,lnN+Math.log(rt)); pts.push({x:rt*100,pi:(rt*100)/lx*(1+1/lx),li:(rt*100)/lx*(1+1/lx+2/(lx*lx)),g:(rt*100)/lx}); }
-    drawRiem(pts,true); drawTbl();
+    var ln = raw.length * 2.302585;
+    var est = (raw.length - Math.log10(ln)).toFixed(2);
+    document.getElementById("v1").innerText = "~10^" + est;
+    document.getElementById("v2").innerText = "~10^" + (raw.length / 2).toFixed(1);
+    document.getElementById("v3").innerText = "BigInt PRO Active";
+    document.getElementById("v4").innerText = "25% | 25% | 25% | 25%";
+    drawClock("25%", "25%", "25%", "25%");
   }
-  document.getElementById('tm').innerText = "⚡ "+(performance.now()-t0).toFixed(1)+" ms";
+  document.getElementById("msg").innerText = (performance.now() - t0).toFixed(1) + " ms";
 }
 
-function drawClk(c1,c5,c7,c11,fx){
-  const cv=document.getElementById('cClock'), cx=cv.getContext('2d'), w=cv.width/2, h=cv.height/2, r=92;
-  cx.clearRect(0,0,cv.width,cv.height);
-  cx.beginPath(); cx.arc(w,h,r,0,6.283); cx.strokeStyle='#334155'; cx.lineWidth=3; cx.stroke();
-  const m=new Map();
-  m.set(1,{c:c1,k:'#34d399'});
-  m.set(5,{c:c5,k:'#fbbf24'});
-  m.set(7,{c:c7,k:'#38bdf8'});
-  m.set(11,{c:c11,k:'#a78bfa'});
-  for(let i=1;i<=12;i++){
-    let a=(i*30-90)*0.017453, x=w+Math.cos(a)*r, y=h+Math.sin(a)*r;
-    if(m.has(i)){
-      let d=m.get(i);
-      cx.beginPath(); cx.moveTo(w,h); cx.lineTo(x,y); cx.strokeStyle=d.k; cx.lineWidth=2; cx.stroke();
-      cx.beginPath(); cx.arc(x,y,14,0,6.283); cx.fillStyle=d.k; cx.fill();
-      cx.fillStyle='#000'; cx.font='bold 11px sans-serif'; cx.textAlign='center'; cx.textBaseline='middle'; cx.fillText(i,x,y);
-      cx.fillStyle=d.k; cx.fillText(String(d.c), w+Math.cos(a)*(r+28), h+Math.sin(a)*(r+28));
-    } else {
-      cx.beginPath(); cx.arc(x,y,7,0,6.283); cx.fillStyle='#1e293b'; cx.fill();
-      cx.fillStyle='#64748b'; cx.font='9px sans-serif'; cx.textAlign='center'; cx.textBaseline='middle'; cx.fillText(i,x,y);
-    }
+function drawClock(c1, c5, c7, c11){
+  var cv = document.getElementById("cv1"), cx = cv.getContext("2d");
+  cx.clearRect(0, 0, 300, 250);
+  cx.beginPath(); cx.arc(150, 125, 80, 0, 6.283); cx.strokeStyle = "#475569"; cx.stroke();
+  var pts = [
+    {h: 1, c: "#34d399", t: c1},
+    {h: 5, c: "#fbbf24", t: c5},
+    {h: 7, c: "#38bdf8", t: c7},
+    {h: 11, c: "#a78bfa", t: c11}
+  ];
+  for(var i = 0; i < pts.length; i++){
+    var a = (pts[i].h * 30 - 90) * 0.01745;
+    var x = 150 + Math.cos(a) * 80, y = 125 + Math.sin(a) * 80;
+    cx.beginPath(); cx.moveTo(150, 125); cx.lineTo(x, y); cx.strokeStyle = pts[i].c; cx.stroke();
+    cx.beginPath(); cx.arc(x, y, 12, 0, 6.283); cx.fillStyle = pts[i].c; cx.fill();
+    cx.fillStyle = "#000"; cx.font = "bold 10px sans-serif"; cx.textAlign = "center"; cx.fillText(pts[i].h, x, y + 3);
+    cx.fillStyle = pts[i].c; cx.fillText(pts[i].t, 150 + Math.cos(a) * 105, 125 + Math.sin(a) * 105);
   }
-  cx.beginPath(); cx.arc(w,h,20,0,6.283); cx.fillStyle='#f87171'; cx.fill();
-  cx.fillStyle='#000'; cx.font='bold 9px sans-serif'; cx.textAlign='center'; cx.fillText('2,3 ('+fx+')',w,h);
 }
 
-function drawRiem(pts,norm){
-  const cv=document.getElementById('cRiem'), cx=cv.getContext('2d'), pL=42,pR=15,pT=15,pB=25, w=cv.width-pL-pR, h=cv.height-pT-pB;
-  cx.clearRect(0,0,cv.width,cv.height); if(pts.length<2)return;
-  const lp=pts[pts.length-1], mx=lp.x, my=Math.max(lp.li,lp.pi)*1.05;
-  cx.strokeStyle='#334155'; cx.beginPath(); cx.moveTo(pL,pT); cx.lineTo(pL,pT+h); cx.lineTo(pL+w,pT+h); cx.stroke();
-  cx.fillStyle='#94a3b8'; cx.font='9px sans-serif'; cx.textAlign='right'; cx.fillText(norm?'100%':Math.round(my),pL-4,pT+8);
-  const pl=function(k,col,dsh){
-    cx.beginPath(); cx.setLineDash(dsh?Array.of(4,4):new Array()); cx.strokeStyle=col; cx.lineWidth=2;
-    pts.forEach(function(p,idx){ let px=pL+(p.x/mx)*w, py=pT+h-((k==='li'?p.li:k==='pi'?p.pi:p.g)/my)*h; idx===0?cx.moveTo(px,py):cx.lineTo(px,py); });
-    cx.stroke(); cx.setLineDash(new Array());
-  };
-  pl('li','#fbbf24',true); pl('pi','#38bdf8',false); pl('g','#f87171',true);
-}
-
-function drawTbl(){
-  const f=document.getElementById('flt').value, tb=document.getElementById('tb');
+function drawRiemann(pts){
+  var cv = document.getElementById("cv2"), cx = cv.getContext("2d");
+  cx.clearRect(0, 0, 420, 250);
