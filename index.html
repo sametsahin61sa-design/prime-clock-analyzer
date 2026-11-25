@@ -1,263 +1,157 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mod-12 Clock Orbit & Division-Free Prime Analyzer | Samet Şahin</title>
-    <style>
-        :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --accent: #38bdf8;
-            --gold: #fbbf24;
-            --green: #34d399;
-            --purple: #a78bfa;
-            --red: #f87171;
-            --border: #334155;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 15px;
-            line-height: 1.5;
-        }
-        .container { max-width: 1200px; margin: 0 auto; }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        h1 { margin: 0; font-size: 1.35rem; color: var(--accent); }
-        .subtitle { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
-        .header-actions { display: flex; gap: 10px; align-items: center; }
-        .lang-btn, .pro-badge-btn {
-            background: var(--card);
-            color: var(--text);
-            border: 1px solid var(--accent);
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
-        .pro-badge-btn { border-color: var(--gold); color: var(--gold); }
-        .pro-badge-btn.unlocked { background: rgba(52, 211, 153, 0.2); border-color: var(--green); color: var(--green); }
-        .control-panel {
-            background: var(--card);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-        input[type="text"] {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 10px 14px;
-            border-radius: 6px;
-            font-size: 1rem;
-            width: 240px;
-            font-family: monospace;
-        }
-        button.run-btn {
-            background: var(--accent);
-            color: var(--bg);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button.excel-btn {
-            background: var(--gold);
-            color: var(--bg);
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .mode-banner {
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            margin-bottom: 20px;
-        }
-        .mode-banner.big { background: rgba(251, 191, 36, 0.12); border-color: var(--gold); color: var(--gold); }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .card {
-            background: var(--card);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            word-break: break-word;
-        }
-        .card h3 { margin: 0 0 6px 0; font-size: 0.85rem; color: var(--muted); }
-        .card .val { font-size: 1.35rem; font-weight: bold; color: var(--text); font-family: monospace; }
-        .card .sub { font-size: 0.78rem; color: var(--accent); margin-top: 4px; }
-        .visual-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .canvas-box {
-            background: var(--card);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-        .canvas-box h3 { margin: 0 0 10px 0; font-size: 1rem; color: var(--gold); text-align: left; }
-        canvas {
-            background: var(--bg);
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            max-width: 100%;
-            height: auto;
-        }
-        .legend {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            font-size: 0.8rem;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
-        .legend span { display: flex; align-items: center; gap: 5px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-        .section-title {
-            font-size: 1.1rem;
-            color: var(--gold);
-            margin: 20px 0 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .filter-group select {
-            background: var(--card);
-            color: var(--text);
-            border: 1px solid var(--border);
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-        }
-        .excel-wrapper {
-            max-height: 420px;
-            overflow: auto;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--card);
-        }
-        table.excel-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: "Consolas", "Courier New", monospace;
-            font-size: 0.85rem;
-            text-align: left;
-        }
-        table.excel-table th {
-            background: #0b1120;
-            color: var(--accent);
-            position: sticky;
-            top: 0;
-            padding: 10px 12px;
-            border: 1px solid var(--border);
-            z-index: 2;
-        }
-        table.excel-table td {
-            padding: 7px 12px;
-            border: 1px solid var(--border);
-            white-space: nowrap;
-        }
-        table.excel-table tr:nth-child(even) { background: rgba(15, 23, 42, 0.4); }
-        .badge { padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
-        .b-mersenne { background: rgba(251, 191, 36, 0.2); color: var(--gold); border: 1px solid var(--gold); }
-        .b-fermat { background: rgba(52, 211, 153, 0.2); color: var(--green); border: 1px solid var(--green); }
-        .b-euler { background: rgba(56, 189, 248, 0.2); color: var(--accent); border: 1px solid var(--accent); }
-        .b-sophie { background: rgba(167, 139, 250, 0.2); color: var(--purple); border: 1px solid var(--purple); }
-        
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-        }
-        .modal-box {
-            background: var(--card);
-            border: 2px solid var(--gold);
-            border-radius: 12px;
-            padding: 25px;
-            max-width: 440px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-        }
-        .modal-box h2 { color: var(--gold); margin-top: 0; font-size: 1.3rem; }
-        .modal-box p { color: var(--muted); font-size: 0.9rem; }
-        .modal-box ul { text-align: left; color: var(--text); font-size: 0.88rem; margin: 15px 0; padding-left: 20px; }
-        .modal-box li { margin-bottom: 6px; }
-        .license-input {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            color: var(--text);
-            border-radius: 6px;
-            font-family: monospace;
-            text-align: center;
-            font-size: 0.95rem;
-        }
-        .modal-btns { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
-        .btn-buy { background: var(--gold); color: #000; text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; }
-        .btn-verify { background: var(--green); color: #000; border: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
-        .btn-close { background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-top: 12px; }
-        footer { margin-top: 30px; padding-top: 15px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--muted); }
-        footer a { color: var(--accent); text-decoration: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mod-12 Prime & Riemann Analyzer | Samet Şahin</title>
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--text:#f8fafc;--muted:#94a3b8;--acc:#38bdf8;--gold:#fbbf24;--grn:#34d399;--pur:#a78bfa;--red:#f87171;--bdr:#334155}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:12px;line-height:1.4}
+.wrap{max-width:1100px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bdr);padding-bottom:12px;margin-bottom:15px;flex-wrap:wrap;gap:8px}
+h1{margin:0;font-size:1.25rem;color:var(--acc)}
+.sub{color:var(--muted);font-size:0.8rem}
+.btn{padding:8px 14px;border-radius:6px;border:none;font-weight:bold;cursor:pointer;font-size:0.88rem}
+.btn-pro{background:var(--card);color:var(--gold);border:1px solid var(--gold)}
+.btn-pro.ok{background:rgba(52,211,153,0.2);color:var(--grn);border-color:var(--grn)}
+.btn-run{background:var(--acc);color:#000}
+.btn-csv{background:var(--gold);color:#000}
+.panel{background:var(--card);padding:12px;border-radius:8px;border:1px solid var(--bdr);display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+input[type=text]{background:var(--bg);border:1px solid var(--bdr);color:var(--text);padding:9px;border-radius:6px;font-size:1rem;width:200px;font-family:monospace}
+.banner{background:rgba(56,189,248,0.12);border:1px solid var(--acc);color:var(--acc);padding:8px 12px;border-radius:6px;font-size:0.82rem;margin-bottom:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:15px}
+.card{background:var(--card);padding:12px;border-radius:8px;border:1px solid var(--bdr);word-break:break-word}
+.card h3{margin:0 0 4px;font-size:0.8rem;color:var(--muted)}
+.val{font-size:1.25rem;font-weight:bold;font-family:monospace}
+.csub{font-size:0.75rem;color:var(--acc);margin-top:3px}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-bottom:18px}
+.cbox{background:var(--card);padding:12px;border-radius:8px;border:1px solid var(--bdr);text-align:center}
+.cbox h3{margin:0 0 8px;font-size:0.95rem;color:var(--gold);text-align:left}
+canvas{background:var(--bg);border-radius:6px;border:1px solid var(--bdr);max-width:100%;height:auto}
+.leg{display:flex;justify-content:center;gap:10px;font-size:0.75rem;margin-top:6px;flex-wrap:wrap}
+.tbar{display:flex;justify-content:space-between;align-items:center;margin:15px 0 8px;flex-wrap:wrap;gap:8px}
+select{background:var(--card);color:var(--text);border:1px solid var(--bdr);padding:7px;border-radius:6px}
+.twrap{max-height:380px;overflow:auto;border:1px solid var(--bdr);border-radius:8px;background:var(--card)}
+table{width:100%;border-collapse:collapse;font-family:monospace;font-size:0.82rem;text-align:left}
+th{background:#0b1120;color:var(--acc);position:sticky;top:0;padding:8px 10px;border:1px solid var(--bdr)}
+td{padding:6px 10px;border:1px solid var(--bdr);white-space:nowrap}
+tr:nth-child(even){background:rgba(15,23,42,0.4)}
+.bdg{padding:2px 5px;border-radius:4px;font-size:0.72rem;font-weight:bold;border:1px solid}
+.bm{color:var(--gold);border-color:var(--gold)}
+.bf{color:var(--grn);border-color:var(--grn)}
+.be{color:var(--acc);border-color:var(--acc)}
+.bs{color:var(--pur);border-color:var(--pur)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99;justify-content:center;align-items:center;padding:15px}
+.mbox{background:var(--card);border:2px solid var(--gold);border-radius:10px;padding:20px;max-width:400px;width:100%;text-align:center}
+.mbox input{width:90%;padding:9px;margin:10px 0;background:var(--bg);border:1px solid var(--bdr);color:#fff;border-radius:6px;text-align:center}
+footer{margin-top:25px;padding-top:12px;border-top:1px solid var(--bdr);font-size:0.78rem;color:var(--muted)}
+footer a{color:var(--acc);text-decoration:none}
+</style>
 </head>
 <body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>Mod-12 Saat Yörüngesi & Bölmesiz Karekök Analizörü</h1>
+    <div class="sub">3-Bölgeli Üst Kök (3b, 3b-1, 3b-2), Riemann Li(x) & Mersenne Motoru</div>
+  </div>
+  <button class="btn btn-pro" id="proBtn" onclick="openM()">👑 PRO Sürümü Aç</button>
+</header>
 
-<div class="container">
-    <header>
-        <div>
-            <h1 id="t-title">Mod-12 Saat Yörüngesi & Bölmesiz Karekök Asal Analizörü</h1>
-            <div class="subtitle" id="t-sub">Üç Bölgeli Üst Kök Haritası (3b, 3b-1, 3b-2), Riemann Li(x) & Mersenne Motoru</div>
-        </div>
-        <div class="header-actions">
-            <button class="pro-badge-btn" id="proStatusBtn" onclick="openProModal()">👑 PRO Sürümü Aç</button>
-            <button class="lang-btn" onclick="toggleLang()" id="lang-btn">English</button>
-        </div>
-    </header>
+<div class="panel">
+  <b>Üst Sınır (N):</b>
+  <input type="text" id="lim" value="5000">
+  <button class="btn btn-run" onclick="runClick()">Analiz Et</button>
+  <button class="btn btn-csv" id="csvBtn" onclick="csvClick()">🔒 Excel İndir [PRO]</button>
+  <span id="tm" style="color:var(--grn);font-size:0.82rem"></span>
+</div>
 
-    <div class="control-panel">
+<div class="banner" id="ban">⚡ <b>Ücretsiz Sürüm (N ≤ 10.000.000):</b> 10 Milyona kadar tam tarama ücretsizdir. 10 Milyon üzeri (Sınırsız BigInt) ve Excel çıktısı PRO lisansı gerektirir.</div>
+
+<div class="grid">
+  <div class="card"><h3>Asal Sayısı π(N)</h3><div class="val" id="r-tot">-</div><div class="csub" id="r-li">-</div></div>
+  <div class="card"><h3>Bölmesiz Üst Kök b = ⌈√N⌉</h3><div class="val" id="r-rt">-</div><div class="csub" id="r-zn">-</div></div>
+  <div class="card"><h3>Mersenne Asalları (2ᵖ - 1)</h3><div class="val" style="color:var(--gold)" id="r-mc">-</div><div class="csub" id="r-ml">-</div></div>
+  <div class="card"><h3>Saat Yörüngeleri (1 | 5 | 7 | 11)</h3><div class="val" style="font-size:1rem" id="r-cc">-</div><div class="csub" id="r-fx">Sabit: 2, 3 (2 adet)</div></div>
+</div>
+
+<div class="charts">
+  <div class="cbox">
+    <h3>🕒 Mod-12 Dairesel Saat Yörüngesi</h3>
+    <canvas id="cClock" width="320" height="280"></canvas>
+    <div class="leg">
+      <span style="color:#34d399">● Saat 1</span><span style="color:#fbbf24">● Saat 5</span>
+      <span style="color:#38bdf8">● Saat 7</span><span style="color:#a78bfa">● Saat 11</span><span style="color:#f87171">● Sabit(2,3)</span>
+    </div>
+  </div>
+  <div class="cbox">
+    <h3>📈 Riemann Hipotezi: π(x) vs Li(x) vs x/ln(x)</h3>
+    <canvas id="cRiem" width="460" height="280"></canvas>
+    <div class="leg">
+      <span style="color:#38bdf8">━ π(x)</span><span style="color:#fbbf24">┅ Li(x)</span><span style="color:#f87171">┅ x/ln(x)</span>
+    </div>
+  </div>
+</div>
+
+<div class="tbar">
+  <b style="color:var(--gold)">📊 İnteraktif Excel Tablosu (İlk 1.000 Kayıt)</b>
+  <select id="flt" onchange="drawTbl()">
+    <option value="ALL">Tümü</option>
+    <option value="MERSENNE">Mersenne Asalları</option>
+    <option value="SPECIAL">Tüm Ünlü Formüllüler</option>
+    <option value="C1">Saat 1 (12k+1)</option>
+    <option value="C5">Saat 5 (12k+5)</option>
+    <option value="C7">Saat 7 (12k+7)</option>
+    <option value="C11">Saat 11 (12k+11)</option>
+    <option value="FIXED">Sabit (2, 3)</option>
+  </select>
+</div>
+
+<div class="twrap">
+  <table>
+    <thead><tr><th>#</th><th>Asal (p)</th><th>Saat Yörüngesi</th><th>Mersenne</th><th>Fermat</th><th>Euler</th><th>Sophie (2p+1)</th></tr></thead>
+    <tbody id="tb"></tbody>
+  </table>
+</div>
+
+<footer>
+  <b>Zenodo Preprints (Samet Şahin, 2026):</b> <a href="https://zenodo.org" target="_blank">Mod-12^6 Hardware Golden Ratio</a> • <a href="https://zenodo.org" target="_blank">Three-Zone Bounding Root Map (3b, 3b-1, 3b-2)</a> • <a href="https://zenodo.org" target="_blank">Mersenne 1/k Threshold Rule</a>
+</footer>
+</div>
+
+<div class="modal" id="mod">
+  <div class="mbox">
+    <h2 style="color:var(--gold);margin-top:0">👑 PRO Sürüm Kilidini Aç</h2>
+    <p style="font-size:0.85rem;color:var(--muted)">10.000.000 üzeri Sınırsız BigInt analizi ve Excel (CSV) indirme için lisans anahtarınızı girin.</p>
+    <input type="text" id="lKey" placeholder="Gumroad Lisans Anahtarı">
+    <div id="lMsg" style="font-size:0.8rem;color:var(--red);min-height:18px"></div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+      <a href="https://gumroad.com" target="_blank" class="btn btn-csv" style="text-decoration:none">🛒 Satın Al ($9)</a>
+      <button class="btn" style="background:var(--grn);color:#000" onclick="verKey()">🔑 Doğrula</button>
+    </div>
+    <button class="btn" style="background:transparent;color:var(--muted);border:1px solid var(--bdr);margin-top:10px" onclick="closeM()">Kapat</button>
+  </div>
+</div>
+
+<script>
+const PID = "fzbwzm", MKEY = "SAMET-PRO-2026", FLIM = BigInt("10000000");
+let isPro = localStorage.getItem('p_pro') === '1', recs = new Array();
+const MEXP = "2,3,5,7,13,17,19,31,61,89,107,127,521,607,1279,2203,2281,3217,4253,4423,9689,9941,11213,19937,21701,23209,44497,86243,110503,132049,216091,756839,859433,1257787,1398269,2976221,3021377,6972593,13466917,20996011,24036583,25964951,30402457,32582657,37156667,42643801,43112609,57885161,74207281,77232917,82589933,136279841".split(",").map(Number);
+const FPRM = "3,5,17,257,65537".split(",").map(x => BigInt(x));
+
+function upUI(){
+  const pb = document.getElementById('proBtn'), cb = document.getElementById('csvBtn');
+  if(isPro){ pb.innerText="✅ PRO Aktif"; pb.classList.add('ok'); cb.innerText="📥 Excel (CSV) İndir"; cb.style.background="var(--grn)"; }
+}
+function openM(){ document.getElementById('mod').style.display='flex'; }
+function closeM(){ document.getElementById('mod').style.display='none'; }
+
+async function verKey(){
+  const k = document.getElementById('lKey').value.trim(), m = document.getElementById('lMsg');
+  if(!k){ m.innerText="Anahtar girin."; return; }
+  if(k === MKEY){ isPro=true; localStorage.setItem('p_pro','1'); upUI(); closeM(); calc(); return; }
+  m.style.color="var(--acc)"; m.innerText="Doğrulanıyor...";
+  try{
+    const r = await fetch("https://gumroad.com",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:"product_permalink="+PID+"&license_key="+encodeURIComponent(k)});
+    const d = await r.json();
+    if(d.success && !d.purchase.refunded){ isPro=true; localStorage.setItem('p_pro','1'); upUI(); closeM(); calc(); }
