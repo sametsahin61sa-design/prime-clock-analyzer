@@ -78,8 +78,8 @@ th{background:#0b1120;color:#38bdf8;position:sticky;top:0}
 
 <script>
 var PRO = localStorage.getItem("pro_ok") === "1";
-var DATA = [];
-var MEXP =;
+var DATA = new Array();
+var MEXP = "2,3,5,7,13,17,19,31".split(",").map(Number);
 
 function openModal(){ document.getElementById("md").style.display = "flex"; }
 function closeModal(){ document.getElementById("md").style.display = "none"; }
@@ -110,10 +110,11 @@ function getCSV(){
   if(!PRO){ openModal(); return; }
   var txt = "Index,Prime,Orbit,Special\n";
   for(var i=0; i<DATA.length; i++){
-    txt += DATA[i].i + "," + DATA[i].p + "," + DATA[i].o + "," + DATA[i].s + "\n";
+    var item = DATA.at(i);
+    txt += item.i + "," + item.p + "," + item.o + "," + item.s + "\n";
   }
   var a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([txt], {type: "text/csv"}));
+  a.href = URL.createObjectURL(new Blob(Array.of(txt), {type: "text/csv"}));
   a.download = "primes.csv"; a.click();
 }
 
@@ -136,31 +137,31 @@ function startCalc(){
   if(!raw) return;
   var n = Number(raw);
   if(n > 10000000 && !PRO){ openModal(); return; }
-
   if(PRO){ document.getElementById("pbtn").innerText = "PRO Active"; }
 
   if(n <= 10000000){
     var b = getRoot(n);
     var sv = new Uint8Array(n + 1);
-    for(var i = 2; i <= n; i++) sv[i] = 1;
+    sv.fill(1);
+    sv.set(Uint8Array.of(0, 0), 0);
     for(var i = 2; i <= b; i++){
-      if(sv[i] === 1){
-        for(var j = i * i; j <= n; j += i) sv[j] = 0;
+      if(sv.at(i) === 1){
+        for(var j = i * i; j <= n; j += i) sv.set(Uint8Array.of(0), j);
       }
     }
 
-    var mList = [];
+    var mList = new Array();
     for(var k = 0; k < MEXP.length; k++){
-      var m = Math.pow(2, MEXP[k]) - 1;
-      if(m <= n && sv[m] === 1) mList.push(m);
+      var m = Math.pow(2, MEXP.at(k)) - 1;
+      if(m <= n && sv.at(m) === 1) mList.push(m);
     }
 
-    DATA = [];
-    var c1 = 0, c5 = 0, c7 = 0, c11 = 0, pts = [];
+    DATA = new Array();
+    var c1 = 0, c5 = 0, c7 = 0, c11 = 0, pts = new Array();
     var step = Math.max(1, Math.floor(n / 40));
 
     for(var i = 2; i <= n; i++){
-      if(sv[i] === 1){
+      if(sv.at(i) === 1){
         var orb = "Fixed (2,3)";
         if(i > 3){
           var md = i % 12;
@@ -203,22 +204,27 @@ function drawClock(c1, c5, c7, c11){
   var cv = document.getElementById("cv1"), cx = cv.getContext("2d");
   cx.clearRect(0, 0, 300, 250);
   cx.beginPath(); cx.arc(150, 125, 80, 0, 6.283); cx.strokeStyle = "#475569"; cx.stroke();
-  var pts = [
+  var pts = Array.of(
     {h: 1, c: "#34d399", t: c1},
     {h: 5, c: "#fbbf24", t: c5},
     {h: 7, c: "#38bdf8", t: c7},
     {h: 11, c: "#a78bfa", t: c11}
-  ];
+  );
   for(var i = 0; i < pts.length; i++){
-    var a = (pts[i].h * 30 - 90) * 0.01745;
+    var item = pts.at(i);
+    var a = (item.h * 30 - 90) * 0.01745;
     var x = 150 + Math.cos(a) * 80, y = 125 + Math.sin(a) * 80;
-    cx.beginPath(); cx.moveTo(150, 125); cx.lineTo(x, y); cx.strokeStyle = pts[i].c; cx.stroke();
-    cx.beginPath(); cx.arc(x, y, 12, 0, 6.283); cx.fillStyle = pts[i].c; cx.fill();
-    cx.fillStyle = "#000"; cx.font = "bold 10px sans-serif"; cx.textAlign = "center"; cx.fillText(pts[i].h, x, y + 3);
-    cx.fillStyle = pts[i].c; cx.fillText(pts[i].t, 150 + Math.cos(a) * 105, 125 + Math.sin(a) * 105);
+    cx.beginPath(); cx.moveTo(150, 125); cx.lineTo(x, y); cx.strokeStyle = item.c; cx.stroke();
+    cx.beginPath(); cx.arc(x, y, 12, 0, 6.283); cx.fillStyle = item.c; cx.fill();
+    cx.fillStyle = "#000"; cx.font = "bold 10px sans-serif"; cx.textAlign = "center"; cx.fillText(item.h, x, y + 3);
+    cx.fillStyle = item.c; cx.fillText(item.t, 150 + Math.cos(a) * 105, 125 + Math.sin(a) * 105);
   }
 }
 
 function drawRiemann(pts){
   var cv = document.getElementById("cv2"), cx = cv.getContext("2d");
   cx.clearRect(0, 0, 420, 250);
+  if(pts.length < 2) return;
+  var last = pts.at(-1);
+  var mx = last.x, my = last.li * 1.05;
+  cx.beginPath(); cx.strokeStyle = "#fbbf24"; cx.lineWidth = 2;
