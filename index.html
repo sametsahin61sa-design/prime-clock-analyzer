@@ -49,15 +49,8 @@
             font-weight: bold;
             font-size: 0.85rem;
         }
-        .pro-badge-btn {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-        .pro-badge-btn.unlocked {
-            background: rgba(52, 211, 153, 0.2);
-            border-color: var(--green);
-            color: var(--green);
-        }
+        .pro-badge-btn { border-color: var(--gold); color: var(--gold); }
+        .pro-badge-btn.unlocked { background: rgba(52, 211, 153, 0.2); border-color: var(--green); color: var(--green); }
         .control-panel {
             background: var(--card);
             padding: 15px;
@@ -108,11 +101,7 @@
             font-size: 0.85rem;
             margin-bottom: 20px;
         }
-        .mode-banner.big {
-            background: rgba(251, 191, 36, 0.12);
-            border-color: var(--gold);
-            color: var(--gold);
-        }
+        .mode-banner.big { background: rgba(251, 191, 36, 0.12); border-color: var(--gold); color: var(--gold); }
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -207,12 +196,7 @@
             white-space: nowrap;
         }
         table.excel-table tr:nth-child(even) { background: rgba(15, 23, 42, 0.4); }
-        .badge {
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
+        .badge { padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
         .b-mersenne { background: rgba(251, 191, 36, 0.2); color: var(--gold); border: 1px solid var(--gold); }
         .b-fermat { background: rgba(52, 211, 153, 0.2); color: var(--green); border: 1px solid var(--green); }
         .b-euler { background: rgba(56, 189, 248, 0.2); color: var(--accent); border: 1px solid var(--accent); }
@@ -255,42 +239,25 @@
             font-size: 0.95rem;
         }
         .modal-btns { display: flex; gap: 10px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
-        .btn-buy {
-            background: var(--gold);
-            color: #000;
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        .btn-verify {
-            background: var(--green);
-            color: #000;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        .btn-close {
-            background: transparent;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 12px;
-        }
-        footer {
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid var(--border);
-            font-size: 0.82rem;
-            color: var(--muted);
-        }
+        .btn-buy { background: var(--gold); color: #000; text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; }
+        .btn-verify { background: var(--green); color: #000; border: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-close { background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-top: 12px; }
+        footer { margin-top: 30px; padding-top: 15px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--muted); }
         footer a { color: var(--accent); text-decoration: none; }
     </style>
 </head>
 <body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1 id="t-title">Mod-12 Saat Yörüngesi & Bölmesiz Karekök Asal Analizörü</h1>
+            <div class="subtitle" id="t-sub">Üç Bölgeli Üst Kök Haritası (3b, 3b-1, 3b-2), Riemann Li(x) & Mersenne Motoru</div>
+        </div>
+        <div class="header-actions">
+            <button class="pro-badge-btn" id="proStatusBtn" onclick="openProModal()">👑 PRO Sürümü Aç</button>
+            <button class="lang-btn" onclick="toggleLang()" id="lang-btn">English</button>
+        </div>
+    </header>
+
+    <div class="control-panel">
